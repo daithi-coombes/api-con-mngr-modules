@@ -1,26 +1,53 @@
 <?php
 
-$oauth1 = array(
-	'options' => array(
-		'oauth_consumer_key' => 'Consumer Key',
-		'oauth_nonce' => '<!--[--scope--]-->',
-		''
-	),
-);
+/*
+  Plugin Name: Twitter
+  Plugin URI: https://github.com/cityindex/labs.cityindex.com/tree/master/httpdocs/wp-content/plugins/ci-login
+  Description: Twitter service module for API Connection Manager
+  Version: 0.1
+  Author: Daithi Coombes
+  Author URI: http://david-coombes.com
+ */
 
-error_reporting(E_ALL);
-ini_set('display_errors','on');
+require_once('twitteroauth/config.php');
+require_once('twitteroauth/twitteroauth/twitteroauth.php');
 
-$ch = curl_init();
-$params = array(
-	'oauth_callback' => 'http://david-coombes.com/wp-admin/admin-ajax.php?action=api-con-mngr'
-);
-curl_setopt($ch, CURLOPT_URL, "http://api.twitter.com/oauth/request_token");
-curl_setopt($ch, CURLOPT_POST, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
-$res = curl_exec($ch);
-$info = curl_getinfo($ch);
+if (!class_exists('API_Con_Twitter')):
 
-print_r($res);
-print_r($info);
-print "\n";
+	class API_Con_Twitter extends API_Con_Mngr_Module{
+
+		/**
+		 * 
+		 */
+		function __construct() {
+
+			/**
+			 * @todo change to set_options with array of 'option_label' => 'option_key' pairs 
+			 */
+			$this->set_params(array(
+				'consumer_key' => '3cQ4PtAvBd8DjChpGI0CTg',
+				'consumer_secret' => 'eOXwPsDTOWreG3sMKhBDYuFze7qBTBQMT2B1SJnbo',
+				'http://david-coombes.com/wp-admin/admin-ajax.php?action=api_con_mngr'
+			));
+		}
+
+		function set_params( array $test ) {
+			;
+		}
+
+		/**
+		 * Set the header
+		 * 
+		 * @param API_Con_Mngr_Header $header
+		 * @return \API_Con_Mngr_Header 
+		 */
+		function set_header(API_Con_Mngr_Header $header) {
+			return $header;
+		}
+
+	}
+
+	endif;
+$oauth1 = new API_Con_Twitter();
+
+ar_print($oauth1);
