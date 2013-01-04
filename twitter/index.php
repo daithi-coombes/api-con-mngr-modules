@@ -49,5 +49,3 @@ if (!class_exists('API_Con_Twitter')):
 
 	endif;
 $oauth1 = new API_Con_Twitter();
-
-ar_print($oauth1);

@@ -34,7 +34,7 @@
 	OAuth Protocol Parameters:
 		Parameters with names beginning with oauth_.
  */
-
+/*
 $oauth1 = array(
 	
 	'button-text' => 'Login with DropBox',
@@ -63,3 +63,5 @@ $oauth1 = array(
 	)
 	
 );
+ * 
+ */
