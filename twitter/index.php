@@ -31,6 +31,9 @@ if (!class_exists('API_Con_Twitter')):
 			
 			$this->twitter_oauth = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET);
 			
+			//set params
+			$this->url_request_token = "https://api.twitter.com/oauth/request_token";
+			
 			/**
 			 * @todo change to set_options with array of 'option_label' => 'option_key' pairs 
 			 */
@@ -39,6 +42,11 @@ if (!class_exists('API_Con_Twitter')):
 				'consumer_secret' => 'eOXwPsDTOWreG3sMKhBDYuFze7qBTBQMT2B1SJnbo',
 				'callback_url' => 'http://david-coombes.com/wp-admin/admin-ajax.php?action=api_con_mngr'
 			));
+			
+			//construct parent
+			$this->consumer_key = CONSUMER_KEY;
+			$this->consumer_secret = CONSUMER_SECRET;
+			parent::__construct();
 		}
 
 		/**
@@ -58,9 +66,25 @@ if (!class_exists('API_Con_Twitter')):
 			return $this->twitter_oauth->getAuthorizeURL($token);
 		}
 		
+		/**
+		 * Get the request token.
+		 * 
+		 * @return string 
+		 */
 		function get_request_token(){
-			$res = $this->twitter_oauth->getRequestToken();
-			return $res['oauth_token'];
+			
+			//get signed request url
+			$request = $this->build_request( $this->url_request_token, 'GET', array(
+				'oauth_nonce' => 'thisisthenonce'
+			));
+			$url = $request->to_url();
+			
+			//make get request
+			$res = $this->request($url, 'GET');
+			parse_str($res['body'], $results);
+			
+			//return token
+			return $results['oauth_token'];
 		}
 	}
 
