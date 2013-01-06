@@ -32,6 +32,7 @@ if (!class_exists('API_Con_Twitter')):
 			$this->twitter_oauth = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET);
 			
 			//set params
+			$this->url_authorize = "https://api.twitter.com/oauth/authorize";
 			$this->url_request_token = "https://api.twitter.com/oauth/request_token";
 			
 			/**
@@ -57,13 +58,6 @@ if (!class_exists('API_Con_Twitter')):
 		 */
 		function set_header(API_Con_Mngr_Header $header) {
 			return $header;
-		}
-		
-		/**
-		 * Override the get_request_method to use the TwitterOauth Class. 
-		 */
-		function get_authorize_url( $token ){
-			return $this->twitter_oauth->getAuthorizeURL($token);
 		}
 		
 		/**
