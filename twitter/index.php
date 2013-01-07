@@ -32,6 +32,7 @@ if (!class_exists('API_Con_Twitter')):
 			$this->twitter_oauth = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET);
 			
 			//set params
+			$this->protocol = 'oauth1';
 			$this->use_nonce = false;
 			$this->url_authorize = "https://api.twitter.com/oauth/authorize";
 			$this->url_request_token = "https://api.twitter.com/oauth/request_token";
@@ -52,16 +53,6 @@ if (!class_exists('API_Con_Twitter')):
 		}
 
 		/**
-		 * Set the header
-		 * 
-		 * @param API_Con_Mngr_Header $header
-		 * @return \API_Con_Mngr_Header 
-		 */
-		function set_header(API_Con_Mngr_Header $header) {
-			return $header;
-		}
-		
-		/**
 		 * Get the request token.
 		 * 
 		 * @return string 
@@ -80,6 +71,42 @@ if (!class_exists('API_Con_Twitter')):
 			
 			//return token
 			return $results['oauth_token'];
+		}
+		
+		/**
+		 * Override request method. 
+		 * Twitter needs to get 
+		 * @param type $uri
+		 * @param type $method
+		 * @param type $parameters 
+		 *
+		function request( $uri, $method, $parameters ){
+			
+		}
+		 * 
+		 */
+		
+		/**
+		 * Set the header
+		 * 
+		 * @param API_Con_Mngr_Header $header
+		 * @return \API_Con_Mngr_Header 
+		 */
+		function set_header(API_Con_Mngr_Header $header) {
+			return $header;
+		}
+		
+		/**
+		 * Verify token
+		 * @return boolean 
+		 */
+		function verify_token(){
+			
+			//if no token set
+			if(!$this->token || empty($this->token))
+				return false;
+			
+			return true;
 		}
 	}
 
