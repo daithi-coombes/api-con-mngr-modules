@@ -106,6 +106,8 @@ if (!class_exists('API_Con_Twitter')):
 			if(!$this->token || empty($this->token))
 				return false;
 			
+			//check current token
+			
 			return true;
 		}
 	}
