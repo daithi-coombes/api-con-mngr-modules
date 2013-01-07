@@ -19,6 +19,12 @@ on of the following:
  * ```php $oauth2 = new My_Class();```
  * ```php $service = new My_Class();```
 
+Your class must create the method
+```php ::verify_token() ```
+This is because it would be impossible for the parent class to know all the
+different response data types for all the services. This method must return a
+boolean true or false.
+
 An example of the minimum requirement for a module class:
 ```php
 class My_Class extends API_Con_Mngr_Module{
@@ -68,4 +74,20 @@ class My_Class extends API_Con_Mngr_Module{
 	}
 }
 $oauth1 = new My_Class();
+```
+
+Plugins can then make calls to the service by calling your class like so:
+```php
+//get the module object
+$module = $API_Connection_Manager->get_service('My_Class/index.php');
+
+//make request to the service
+$response = $module->get_result(
+	'https://example.com/get_data',
+	'GET',
+	array('param1'=>'value1')
+	);
+
+//parse the response
+$data = json_decode($response['body']);
 ```
