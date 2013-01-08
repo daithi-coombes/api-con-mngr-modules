@@ -26,7 +26,7 @@ echo "Current API hits remaining: {$content->remaining_hits}.";
 /* Get logged in user to help with tests. */
 $user = $connection->get('account/verify_credentials');
 
-$active = FALSE;
+$active = TRUE;
 if (empty($active) || empty($_GET['confirmed']) || $_GET['confirmed'] !== 'TRUE') {
   echo '<h1>Warning! This page will make many requests to Twitter.</h1>';
   echo '<h3>Performing these test might max out your rate limit.</h3>';

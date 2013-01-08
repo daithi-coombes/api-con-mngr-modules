@@ -43,6 +43,8 @@ if (!class_exists('API_Con_Twitter')):
 			$this->consumer_secret = CONSUMER_SECRET;
 			$this->callback_url = 'http://david-coombes.com/wp-admin/admin-ajax.php?action=api_con_mngr';
 			parent::__construct();
+			
+			$this->get_params();
 		}
 
 		function check_error( array $response ){
@@ -114,10 +116,16 @@ if (!class_exists('API_Con_Twitter')):
 		 */
 		function request( $uri, $method, $parameters=array() ){
 			
+			//make sure parameters are loaded
+			$this->get_params();
+			
 			//sign request
 			$method = strtoupper($method);
 			$request = $this->build_request( $uri, $method, $parameters);
-			$url = $request->to_url();
+			if($method=='POST')
+				$url = $request->get_normalized_http_url ();
+			else
+				$url = $request->to_url();
 			
 			//send and return result
 			return parent::request( $url, $method, $parameters );
