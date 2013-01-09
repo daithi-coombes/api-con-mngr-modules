@@ -32,18 +32,7 @@ if (!class_exists("Dropbox_API_Module")):
 
 			$this->get_params();
 		}
-
-		function build_request($url, $method = 'GET', $params = array()) {
-
-			//token must be stdClass
-			$token = new OAuthConsumer($this->oauth_token, $this->oauth_token_secret);
-
-			$request = OAuthRequest::from_consumer_and_token($this->consumer, $token, $method, $url, $params);
-			$request->sign_request($this->sha1_method, $this->consumer, $token);
-
-			return $request;
-		}
-
+		
 		function check_error(array $response) {
 
 			$body = json_decode($response['body']);
@@ -69,7 +58,7 @@ if (!class_exists("Dropbox_API_Module")):
 				'oauth_consumer_key' => $this->consumer_key,
 				'oauth_token' => $this->oauth_token
 			);			
-			$url = $this->build_request($this->url_access_token, "POST", $params);
+			$url = $this->oauth_sign_request($this->url_access_token, "POST", $params);
 			
 			//make request
 			$res = parent::request($url->to_url(), "POST", $params);
@@ -107,7 +96,7 @@ if (!class_exists("Dropbox_API_Module")):
 			
 			//sign request
 			$method = strtoupper($method);
-			$request = $this->build_request($uri, $method, $parameters);
+			$request = $this->oauth_sign_request($uri, $method, $parameters);
 
 			if ($method == 'POST')
 				$url = $request->get_normalized_http_url();

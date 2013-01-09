@@ -121,7 +121,7 @@ if (!class_exists('API_Con_Twitter')):
 			
 			//sign request
 			$method = strtoupper($method);
-			$request = $this->build_request( $uri, $method, $parameters);
+			$request = $this->oauth_sign_request( $uri, $method, $parameters);
 			if($method=='POST')
 				$url = $request->get_normalized_http_url ();
 			else
