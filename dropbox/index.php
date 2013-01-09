@@ -80,22 +80,18 @@ if (!class_exists("Dropbox_API_Module")):
 			$params['oauth_callback'] = $this->callback_url;
 			return parent::get_authorize_url($params);
 		}
-
+		
 		/**
-		 * Override get_request_token to force a POST request
-		 * @return array Returns the tokens 
-		 *
-		function get_request_token() {
-			return parent::get_request_token('GET');
-		}
-		 *
-		 * @param type $uri
-		 * @param type $method
-		 * @param type $parameters
-		 * @return array 
+		 * Override the request method to sign requests.
+		 * 
+		 * @see API_Con_Mngr_Module::request()
+		 * @param string $uri The full endpoint url.
+		 * @param string $method Default GET. The http method to user.
+		 * @param array $parameters Optional. An array of parameters in key
+		 * value pairs
+		 * @return array Returns the response array in the WP_HTTP format. 
 		 */
-
-		function request($uri, $method, $parameters = array()) {
+		function request($uri, $method='GET', $parameters = array()) {
 			
 			//make sure we have the params
 			$this->get_params();

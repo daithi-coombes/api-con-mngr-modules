@@ -60,7 +60,7 @@ if (!class_exists('API_Con_Twitter')):
 			if(@$res->errors)
 				foreach($res->errors as $err)
 					$errs[] = "{$err->code}: {$err->message}";
-			
+					
 			//if errors return WP_Error
 			if(count($errs))
 				return $this->error(implode("\n", $errs));
@@ -87,10 +87,14 @@ if (!class_exists('API_Con_Twitter')):
 		
 		/**
 		 * Override request method. 
-		 * Twitter needs to send the user_id with every request
-		 * @param type $uri
-		 * @param type $method
-		 * @param type $parameters 
+		 * 
+		 * @see API_Con_Mngr_Module::request()
+		 * @see API_Con_Mngr_Module::request()
+		 * @param string $uri The full endpoint url.
+		 * @param string $method Default GET. The http method to user.
+		 * @param array $parameters Optional. An array of parameters in key
+		 * value pairs
+		 * @return array Returns the response array in the WP_HTTP format. 
 		 */
 		function request( $uri, $method, $parameters=array() ){
 			
