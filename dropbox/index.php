@@ -2,7 +2,7 @@
 
 /*
   Plugin Name: DropBox
-  Plugin URI: https://github.com/cityindex/labs.cityindex.com/tree/master/httpdocs/wp-content/plugins/ci-login
+  Plugin URI: https://github.com/david-coombes/api-con-mngr-modules
   Description: Dropbox module
   Version: 0.1
   Author: Daithi Coombes

@@ -1,7 +1,7 @@
 <?php
 /*
   Plugin Name: Twitter
-  Plugin URI: https://github.com/cityindex/labs.cityindex.com/tree/master/httpdocs/wp-content/plugins/ci-login
+  Plugin URI: https://github.com/david-coombes/api-con-mngr-modules
   Description: Twitter service module for API Connection Manager
   Version: 0.1
   Author: Daithi Coombes

@@ -1,8 +1,8 @@
 <?php
 /*
   Plugin Name: Facebook Login
-  Plugin URI: https://github.com/cityindex/labs.cityindex.com/tree/master/httpdocs/wp-content/plugins/ci-login
-  Description: Facebook login module for google
+  Plugin URI: https://github.com/david-coombes/api-con-mngr-modules
+  Description: Facebook login module for API Connection Manager
   Version: 0.1
   Author: Daithi Coombes
   Author URI: http://david-coombes.com
