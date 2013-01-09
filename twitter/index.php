@@ -16,7 +16,6 @@
  */
 
 require_once('twitteroauth/config.php');
-require_once('twitteroauth/twitteroauth/twitteroauth.php');
 
 if (!class_exists('API_Con_Twitter')):
 
@@ -71,6 +70,7 @@ if (!class_exists('API_Con_Twitter')):
 		
 		/**
 		 * Get twitter user_id after successfull login
+		 * @todo add this method to the parent class
 		 * @see API_Con_Mngr_Module::do_login() 
 		 */
 		function do_login( $dto ){
