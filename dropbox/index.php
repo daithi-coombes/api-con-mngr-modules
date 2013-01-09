@@ -84,10 +84,16 @@ if (!class_exists("Dropbox_API_Module")):
 		/**
 		 * Override get_request_token to force a POST request
 		 * @return array Returns the tokens 
-		 */
+		 *
 		function get_request_token() {
 			return parent::get_request_token('GET');
 		}
+		 *
+		 * @param type $uri
+		 * @param type $method
+		 * @param type $parameters
+		 * @return array 
+		 */
 
 		function request($uri, $method, $parameters = array()) {
 			

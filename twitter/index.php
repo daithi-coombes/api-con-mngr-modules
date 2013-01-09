@@ -86,28 +86,6 @@ if (!class_exists('API_Con_Twitter')):
 		}
 		
 		/**
-		 * Get the request token.
-		 * 
-		 * @return string 
-		 */
-		function get_request_token(){
-			
-			//get tokens
-			$url = $this->url_request_token;
-			$res = $this->request($url, 'GET');
-			if(is_wp_error($res)){
-				ar_print($res);
-				ar_print($url);
-				debug_print();
-			}
-			parse_str($res['body'], $results);
-			$this->set_params($results);
-			
-			//return token
-			return $results;
-		}
-		
-		/**
 		 * Override request method. 
 		 * Twitter needs to send the user_id with every request
 		 * @param type $uri
@@ -141,23 +119,6 @@ if (!class_exists('API_Con_Twitter')):
 			return $header;
 		}
 		
-		/**
-		 * Verify token
-		 * @return boolean 
-		 *
-		function verify_token(){
-			
-			//if no token set
-			if(!$this->token || empty($this->token))
-				return false;
-			
-			//check current token
-			$res = $this->request('http://api.twitter.com/1/account/verify_credentials.format', 'GET');
-			
-			return true;
-		}
-		 * 
-		 */
 	}
 
 	endif;
