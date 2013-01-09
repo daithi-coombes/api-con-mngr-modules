@@ -76,67 +76,9 @@ if (!class_exists("Dropbox_API_Module")):
 			
 			//store params
 			$tokens = array();
-			parse_str($str, $tokens);
+			parse_str($res['body'], $tokens);
+			$tokens['token'] = $tokens['oauth_token'];
 			$this->set_params($tokens);
-			
-			return;
-			/**
-			$ch = curl_init($url->to_url());//$url->get_normalized_http_url());
-			curl_setopt_array($ch, array(
-				CURLOPT_POST => true,
-				CURLOPT_POSTFIELDS => $params,
-				CURLOPT_SSL_VERIFYPEER => true,
-				CURLOPT_VERBOSE        => true,
-				CURLOPT_HEADER         => true,
-				CURLINFO_HEADER_OUT    => false,
-				CURLOPT_RETURNTRANSFER => true,
-				CURLOPT_FOLLOWLOCATION => false,
-			));
-			
-			$res = curl_exec($ch);
-			ar_print($res);
-			 * 
-			 */
-			
-			/**
-			require_once('Dropbox/Dropbox/API.php');
-			require_once('Dropbox/Dropbox/Exception.php');
-			require_once('Dropbox/Dropbox/OAuth/Consumer/ConsumerAbstract.php');
-			require_once('Dropbox/Dropbox/OAuth/Consumer/Curl.php');
-			require_once('Dropbox/Dropbox/OAuth/Storage/StorageInterface.php');
-			require_once('Dropbox/Dropbox/OAuth/Storage/Session.php');
-			$storage = new Dropbox\OAuth\Storage\Session();
-			$curl = new Dropbox\OAuth\Consumer\Curl( 
-				$this->consumer_key,
-				$this->consumer_secret,
-				$storage
-			);
-			 * 
-			 */
-			
-			/**
-			//sign request
-			$request = $this->request($this->url_access_token, 'GET', array(
-				'oauth_verifier' => $oauth_verifier
-					));
-			ar_print($request);
-
-			//this call will return user_id
-			$token = new OAuthConsumer($this->oauth_token, $this->oauth_token_secret);
-			ar_print($token);
-			/**
-			  $request = $this->request( $this->url_access_token, 'POST', array(
-			  'oauth_consumer_key' => $this->consumer_key,
-			  'oauth_token' => $dto->response['oauth_token'],
-			  'oauth_token_secret' => $this->oauth_token_secret
-			  ));
-			 * 
-			 *
-			//save params
-			$token = OAuthUtil::parse_parameters($request['body']);
-			$this->set_params($token);
-			 * 
-			 */
 		}
 
 		/**
@@ -159,7 +101,10 @@ if (!class_exists("Dropbox_API_Module")):
 		}
 
 		function request($uri, $method, $parameters = array()) {
-
+			
+			//make sure we have the params
+			$this->get_params();
+			
 			//sign request
 			$method = strtoupper($method);
 			$request = $this->build_request($uri, $method, $parameters);
