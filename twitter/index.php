@@ -28,8 +28,6 @@ if (!class_exists('API_Con_Twitter')):
 		 */
 		function __construct() {
 			
-			//$this->twitter_oauth = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET);
-			
 			//set params
 			$this->protocol = 'oauth1';
 			$this->use_nonce = false;
@@ -113,17 +111,7 @@ if (!class_exists('API_Con_Twitter')):
 			return parent::request( $url, $method, $parameters );
 		}
 		
-		/**
-		 * Set the header
-		 * 
-		 * @param API_Con_Mngr_Header $header
-		 * @return \API_Con_Mngr_Header 
-		 */
-		function set_header(API_Con_Mngr_Header $header) {
-			return $header;
-		}
-		
 	}
-
 	endif;
+
 $oauth1 = new API_Con_Twitter();
