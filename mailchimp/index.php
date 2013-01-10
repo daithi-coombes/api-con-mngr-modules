@@ -7,12 +7,19 @@
   Author: Daithi Coombes
   Author URI: http://david-coombes.com
  */
+if(!class_exists("MailChimp")):
+	class MailChimp extends API_Con_Mngr_Module{
 
-class MailChimp extends API_Con_Mngr_Module{
-	
-	function check_error( $response ){
-		return false;
+		function __construct(){
+
+			$this->protocol = "oauth2";
+
+			parent::__construct();
+		}
+
+		function check_error( array $response ){
+			return false;
+		}
 	}
-}
-
-$service = new MailChimp();
+	$oauth2 = new MailChimp();
+endif;
