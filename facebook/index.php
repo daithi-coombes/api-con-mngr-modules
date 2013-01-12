@@ -8,6 +8,28 @@
   Author URI: http://david-coombes.com
  */
 
+if(!class_exists("Facebook_API")):
+class Facebook_API extends API_Con_Mngr_Module{
+	
+	public function __construct(){
+		
+		$this->client_id = "";
+		$this->client_secret = "";
+		$this->url_authorize = "https://www.facebook.com/dialog/oauth";
+		$this->url_request_token = "";
+		$this->url_access_token = "";
+		
+		parent::__construct();
+	}
+	
+	public function check_error(array $response) {
+		return false;
+	}
+}
+endif;
+
+$oauth2 = new Facebook_API();
+/**
 $oauth2 = array(
 	'button-text' => 'Login with FaceBook',
 	
@@ -40,3 +62,5 @@ $oauth2 = array(
 		'redirect_uri' => '<!--[--redirect-uri--]-->',
 	)
 );
+ * 
+ */

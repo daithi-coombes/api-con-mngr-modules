@@ -28,18 +28,38 @@
  * <!--[--redirect-uri--]--> use the redirect uri (you can find this in the API-Con service options in the dashboard
  */
 
+if(!class_exists("Google_API")):
+	class Google_API extends API_Con_Mngr_Module{
 
+		function __construct(){
+
+			$this->client_id = "1086161628880.apps.googleusercontent.com";
+			$this->client_secret = "WBfNSAgCMnIHiSMd3IJ1rGeg";
+			$this->scope = "";
+			$this->url_authorize = "https://accounts.google.com/o/oauth2/auth";
+			$this->redirect_uri = "http://127.0.0.1/wp3.5/wp-admin/admin-ajax.php?action=api_con_mngr";
+
+			parent::__construct();
+		}
+
+		function check_error(array $response) {
+			;
+		}
+	}
+endif;
+
+/**
 $oauth2 = array(
 	
 	/**
 	 * Service Params 
-	 */
+	 *
 	'offline' => true,
 	'button-text' => 'Login with Google',
 	
 	/**
 	 * Grant Params
-	 */
+	 *
 	'grant-uri' => 'https://accounts.google.com/o/oauth2/auth',
 	'grant-response-type' => 'json',
 	//per blog options
@@ -58,7 +78,7 @@ $oauth2 = array(
 	
 	/**
 	 * Token Params 
-	 */
+	 *
 	'token-uri' => 'https://accounts.google.com/o/oauth2/token',
 	'token-method' => 'POST',
 	'token-datatype' => 'json',
@@ -74,7 +94,7 @@ $oauth2 = array(
 	
 	/**
 	 * Revoke Params 
-	 */
+	 *
 	'revoke-uri' => 'https://accounts.google.com/o/oauth2/revoke',
 	'revoke-method' => 'get',
 	'revoke-vars' => array(
@@ -83,7 +103,7 @@ $oauth2 = array(
 	
 	/**
 	 * Offline Params 
-	 */
+	 *
 	'offline-token' => array(
 		'access_type' => 'offline'	//this will get sent in token request
 	),
@@ -97,3 +117,4 @@ $oauth2 = array(
 		'grant_type' => 'refresh_token'
 	)
 );
+*/
