@@ -34,7 +34,7 @@ if (!class_exists("Dropbox_API_Module")):
 		}
 		
 		function check_error(array $response) {
-
+			debug_print();
 			$body = json_decode($response['body']);
 			if (isset($body->error))
 				return $this->error($body->error);
