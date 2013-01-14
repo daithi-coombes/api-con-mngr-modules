@@ -16,9 +16,6 @@ if(!class_exists("MailChimp_API")):
 		function __construct(){
 
 			//set params
-			$this->client_id = "538976041739";
-			$this->client_secret = "d1e1c58df4d40c413766d57c8515b6ba";
-			$this->redirect_uri = "http://127.0.0.1/wp3.5/wp-admin/admin-ajax.php?action=api_con_mngr";
 			$this->protocol = "oauth2";
 			$this->sessions = true;
 			$this->url_authorize = "https://login.mailchimp.com/oauth2/authorize";

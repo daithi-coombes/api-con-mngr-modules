@@ -13,8 +13,6 @@ if(!class_exists("GitHub_API")):
 	
 		function __construct(){
 			
-			$this->client_id = "815c1b11dd41b653510e";
-			$this->client_secret = "5ec6f5f3c3f3c0f00e90f3dcc946cd741ccf9cd7";
 			$this->protocol = "oauth2";
 			$this->url_authorize = "https://github.com/login/oauth/authorize";
 			$this->url_access_token = "https://github.com/login/oauth/access_token";

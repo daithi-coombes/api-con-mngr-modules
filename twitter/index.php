@@ -29,16 +29,15 @@ if (!class_exists('API_Con_Twitter')):
 		function __construct() {
 			
 			//set params
+			$this->options = array(
+				'callback_url' => '%s'
+			);
 			$this->protocol = 'oauth1';
 			$this->use_nonce = false;
 			$this->url_access_token = "https://api.twitter.com/oauth/access_token";
 			$this->url_authorize = "https://api.twitter.com/oauth/authorize";
 			$this->url_request_token = "https://api.twitter.com/oauth/request_token";
 			
-			//construct parent
-			$this->consumer_key = CONSUMER_KEY;
-			$this->consumer_secret = CONSUMER_SECRET;
-			$this->callback_url = 'http://david-coombes.com/wp-admin/admin-ajax.php?action=api_con_mngr';
 			parent::__construct();
 			
 			$this->get_params();

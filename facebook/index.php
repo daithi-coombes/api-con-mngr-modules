@@ -13,9 +13,7 @@ class Facebook_API extends API_Con_Mngr_Module{
 	
 	public function __construct(){
 		
-		$this->client_id = "519687751376514";
-		$this->client_secret = "9484b0aeb7ad79b89ac46bb1c3ec5515";
-		$this->redirect_uri = "http://cityindex.loc/wp3.5/wp-admin/admin-ajax.php?action=api_con_mngr";
+		$this->protocol = "oauth2";
 		$this->scope = "email";
 		$this->url_authorize = "https://www.facebook.com/dialog/oauth";
 		$this->url_access_token = "https://graph.facebook.com/oauth/access_token";

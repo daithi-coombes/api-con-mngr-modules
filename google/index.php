@@ -13,12 +13,12 @@ if(!class_exists("Google_API")):
 
 		function __construct(){
 			
-			$this->client_id = "1086161628880.apps.googleusercontent.com";
-			$this->client_secret = "WBfNSAgCMnIHiSMd3IJ1rGeg";
-			$this->scope = "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email";
+			$this->options = array(
+				'scope' => '%s'
+			);
+			$this->protocol = "oauth2";
 			$this->url_authorize = "https://accounts.google.com/o/oauth2/auth";
 			$this->url_access_token = "https://accounts.google.com/o/oauth2/token";
-			$this->redirect_uri = "http://127.0.0.1/wp3.5/wp-admin/admin-ajax.php?action=api_con_mngr";
 
 			parent::__construct();
 		}

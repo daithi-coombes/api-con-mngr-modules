@@ -23,11 +23,11 @@ if (!class_exists("Dropbox_API_Module")):
 			$this->url_authorize = "https://api.dropbox.com/1/oauth/authorize";
 			$this->url_request_token = "https://api.dropbox.com/1/oauth/request_token";
 			$this->user_id = false;
-
-			//construct parent
-			$this->consumer_key = 'rlloodn1vrhfaqa';
-			$this->consumer_secret = '3a9u8a8nf1vm3x2';
-			$this->callback_url = 'http://cityindex.loc/wp3.5/wp-admin/admin-ajax.php?action=api_con_mngr';
+			
+			//add additional options
+			$this->options = array(
+				'callback_url' => '%s'
+			);
 			parent::__construct();
 
 			$this->get_params();
@@ -76,7 +76,7 @@ if (!class_exists("Dropbox_API_Module")):
 		 * @return string The authorize url 
 		 */
 		function get_authorize_url($params) {
-
+			ar_print($this);
 			$params['oauth_callback'] = $this->callback_url;
 			return parent::get_authorize_url($params);
 		}
@@ -99,7 +99,7 @@ if (!class_exists("Dropbox_API_Module")):
 			//sign request
 			$method = strtoupper($method);
 			$request = $this->oauth_sign_request($uri, $method, $parameters);
-			ar_print($request);
+			
 			if ($method == 'POST')
 				$url = $request->get_normalized_http_url();
 			else
