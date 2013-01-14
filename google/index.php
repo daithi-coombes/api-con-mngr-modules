@@ -37,6 +37,14 @@ if(!class_exists("Google_API")):
 				'redirect_uri' => $this->redirect_uri
 			));
 		}
+
+		/**
+		 * Verify token
+		 * @return boolean 
+		 */
+		function verify_token(){
+			return true;
+		}
 	}
 endif;
 $oauth2 = new Google_API();

@@ -89,9 +89,11 @@ if (!class_exists("Dropbox_API_Module")):
 		 * @param string $method Default GET. The http method to user.
 		 * @param array $parameters Optional. An array of parameters in key
 		 * value pairs
+		 * @param boolean $die Default true. Wether to die with a login button
+		 * if there's an error.
 		 * @return array Returns the response array in the WP_HTTP format. 
 		 */
-		function request($uri, $method='GET', $parameters = array()) {
+		function request($uri, $method='GET', $parameters = array(), $die=true) {
 			
 			//make sure we have the params
 			$this->get_params();
@@ -104,11 +106,26 @@ if (!class_exists("Dropbox_API_Module")):
 				$url = $request->get_normalized_http_url();
 			else
 				$url = $request->to_url();
-			
 			//send and return result
-			return parent::request($url, $method, $parameters);
+			return parent::request($url, $method, $parameters, $die);
 		}
 
+		/**
+		 * Verify token
+		 * @return boolean 
+		 */
+		function verify_token(){
+			
+			//if no tokens set
+			if(empty($this->oauth_token) || empty($this->oauth_token_secret))
+				return false;
+			
+			$res = $this->request("https://api.dropbox.com/1/account/info", "GET", null, false);
+			if(is_wp_error($res))
+				return false;
+			
+			return true;
+		}
 	}
 
 	endif;

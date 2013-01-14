@@ -110,6 +110,14 @@ if (!class_exists('API_Con_Twitter')):
 			return parent::request( $url, $method, $parameters );
 		}
 		
+
+		/**
+		 * Verify token
+		 * @return boolean 
+		 */
+		function verify_token(){
+			return true;
+		}
 	}
 	endif;
 

@@ -30,7 +30,14 @@ if(!class_exists("GitHub_API")):
 				'scope' => 'repo, user'
 			));
 		}
-	
+
+		/**
+		 * Verify token
+		 * @return boolean 
+		 */
+		function verify_token(){
+			return true;
+		}
 	}
 endif;
 $oauth2 = new GitHub_API();

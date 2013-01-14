@@ -58,6 +58,14 @@ if(!class_exists("MailChimp_API")):
 			
 			return parent::request($url, $method, $parameters);
 		}
+
+		/**
+		 * Verify token
+		 * @return boolean 
+		 */
+		function verify_token(){
+			return true;
+		}
 	}
 endif;
 $oauth2 = new MailChimp_API();

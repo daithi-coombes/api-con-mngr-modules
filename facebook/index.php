@@ -31,6 +31,18 @@ class Facebook_API extends API_Con_Mngr_Module{
 	public function check_error(array $response) {
 		return false;
 	}
+
+		/**
+		 * Verify token
+		 * @return boolean 
+		 */
+		function verify_token(){
+			
+			if(empty($this->access_token))
+				return false;
+			
+			return true;
+		}
 }
 endif;
 
