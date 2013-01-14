@@ -27,16 +27,16 @@ if (!class_exists("Dropbox_API_Module")):
 			//construct parent
 			$this->consumer_key = 'rlloodn1vrhfaqa';
 			$this->consumer_secret = '3a9u8a8nf1vm3x2';
-			$this->callback_url = 'http://david-coombes.com/wp-admin/admin-ajax.php?action=api_con_mngr';
+			$this->callback_url = 'http://cityindex.loc/wp3.5/wp-admin/admin-ajax.php?action=api_con_mngr';
 			parent::__construct();
 
 			$this->get_params();
 		}
 		
 		function check_error(array $response) {
-			debug_print();
-			$body = json_decode($response['body']);
-			if (isset($body->error))
+			if(@$response['body'])
+				$body = json_decode($response['body']);
+			if(isset($body->error))
 				return $this->error($body->error);
 
 			return true;
@@ -99,12 +99,12 @@ if (!class_exists("Dropbox_API_Module")):
 			//sign request
 			$method = strtoupper($method);
 			$request = $this->oauth_sign_request($uri, $method, $parameters);
-
+			ar_print($request);
 			if ($method == 'POST')
 				$url = $request->get_normalized_http_url();
 			else
 				$url = $request->to_url();
-
+			
 			//send and return result
 			return parent::request($url, $method, $parameters);
 		}
