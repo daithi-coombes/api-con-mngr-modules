@@ -45,6 +45,9 @@ if (!class_exists('API_Con_Twitter')):
 
 		function check_error( array $response ){
 			
+			if(!@$response['body'])
+				return false;
+			
 			//get response
 			$res = json_decode($response['body']);
 			$errs = array();
@@ -101,15 +104,23 @@ if (!class_exists('API_Con_Twitter')):
 			//sign request
 			$method = strtoupper($method);
 			$request = $this->oauth_sign_request( $uri, $method, $parameters);
-			if($method=='POST')
+			
+			if($method=='POST'){
 				$url = $request->get_normalized_http_url ();
+				$this->headers = $request->to_header();
+				//$parameters = $request->get_parameters();
+			}
 			else
 				$url = $request->to_url();
-			
+
 			//send and return result
+			$this->headers = $request->to_header();
 			return parent::request( $url, $method, $parameters );
 		}
 		
+		function get_request_token(){
+			return parent::get_request_token('POST');
+		}
 
 		/**
 		 * Verify token

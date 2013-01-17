@@ -55,7 +55,7 @@ if (!class_exists("Dropbox_API_Module")):
 			
 			//post fields and signed request
 			$params = array(
-				'oauth_consumer_key' => $this->consumer_key,
+				'oauth_consumer_key' => $this->oauth_consumer_key,
 				'oauth_token' => $this->oauth_token
 			);			
 			$url = $this->oauth_sign_request($this->url_access_token, "POST", $params);
@@ -76,7 +76,6 @@ if (!class_exists("Dropbox_API_Module")):
 		 * @return string The authorize url 
 		 */
 		function get_authorize_url($params) {
-			ar_print($this);
 			$params['oauth_callback'] = $this->callback_url;
 			return parent::get_authorize_url($params);
 		}
@@ -106,6 +105,9 @@ if (!class_exists("Dropbox_API_Module")):
 				$url = $request->get_normalized_http_url();
 			else
 				$url = $request->to_url();
+			if(!$die){
+				ar_print($url);
+			}
 			//send and return result
 			return parent::request($url, $method, $parameters, $die);
 		}
