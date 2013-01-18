@@ -75,6 +75,7 @@ if (!class_exists('API_Con_Twitter')):
 		 */
 		function do_login( $dto ){
 			
+			return;
 			//this call will return user_id
 			$request = $this->request( $this->url_access_token, 'GET', array(
 				'oauth_verifier' => $dto->response['oauth_verifier']
@@ -107,8 +108,6 @@ if (!class_exists('API_Con_Twitter')):
 			
 			if($method=='POST'){
 				$url = $request->get_normalized_http_url ();
-				$this->headers = $request->to_header();
-				//$parameters = $request->get_parameters();
 			}
 			else
 				$url = $request->to_url();
