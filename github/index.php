@@ -31,6 +31,8 @@ if(!class_exists("GitHub_API")):
 			));
 		}
 
+		function get_uid(){}
+		
 		/**
 		 * Verify token
 		 * @return boolean 

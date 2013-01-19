@@ -108,8 +108,10 @@ if (!class_exists("Dropbox_API_Module")):
 		function get_access_token( $response ){
 			$this->token = $response['oauth_token'];
 			$this->log("getting access tokens");
+			$this->log($this);
 			$res = $this->request( $this->url_access_token, "POST", array(
-				'oauth_token_secret' => $this->oauth_token_secret
+				'oauth_token_secret' => $this->oauth_token_secret,
+				'oauth_token' => $this->oauth_token
 			));
 			$tokens = (array) $this->parse_response($res);
 			$this->set_params($tokens);
@@ -125,6 +127,13 @@ if (!class_exists("Dropbox_API_Module")):
 		function get_authorize_url($params) {
 			$params['oauth_callback'] = $this->callback_url;
 			return parent::get_authorize_url($params);
+		}
+		
+		function get_uid(){
+			$res = $this->request(
+					"https://api.dropbox.com/1/account/info", "get");
+			$this->log("get_uid");
+			$this->log($res);
 		}
 		
 		/**

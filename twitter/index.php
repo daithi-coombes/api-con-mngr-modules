@@ -121,7 +121,9 @@ if (!class_exists('API_Con_Twitter')):
 		function get_request_token(){
 			return parent::get_request_token('POST');
 		}
-
+		
+		function get_uid(){}
+		
 		/**
 		 * Verify token
 		 * @return boolean 

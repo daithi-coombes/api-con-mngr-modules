@@ -38,6 +38,8 @@ if(!class_exists("Google_API")):
 			));
 		}
 
+		function get_uid(){}
+		
 		/**
 		 * Verify token
 		 * @return boolean 

@@ -37,6 +37,9 @@ if(!class_exists("MailChimp_API")):
 			), $tokens);
 			return $this->url_authorize . "?" . http_build_query($fields);
 		}
+		
+		function get_uid(){}
+		
 		/**
 		 * return false if no error or error string if one
 		 * @param array $response The serivce response in the WP_Http format

@@ -28,6 +28,8 @@ class Facebook_API extends API_Con_Mngr_Module{
 		));
 	}
 	
+		function get_uid(){}
+		
 	public function check_error(array $response) {
 		return false;
 	}
