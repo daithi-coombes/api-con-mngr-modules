@@ -23,7 +23,7 @@ ini_set('html_errors', 'On');
 // Register a simple autoload function
 spl_autoload_register(function($class){
     $class = str_replace('\\', '/', $class);
-    require_once('../' . $class . '.php');
+    include_once('../' . $class . '.php');
 });
 
 // Set your consumer key, secret and callback URL

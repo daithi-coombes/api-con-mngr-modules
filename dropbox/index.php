@@ -18,6 +18,7 @@ if (!class_exists("Dropbox_API_Module")):
 		function __construct() {
 			//set params
 			$this->protocol = 'oauth1';
+			$this->sha1_method = false;
 			$this->use_nonce = false;
 			$this->url_access_token = "https://api.dropbox.com/1/oauth/access_token";
 			$this->url_authorize = "https://api.dropbox.com/1/oauth/authorize";
@@ -31,6 +32,35 @@ if (!class_exists("Dropbox_API_Module")):
 			parent::__construct();
 
 			$this->get_params();
+			/**
+			//test dropbox sdk
+			require_once('Dropbox/Dropbox/API.php');
+			require_once('Dropbox/Dropbox/Exception.php');
+			require_once('Dropbox/Dropbox/OAuth/Storage/Encrypter.php');
+			require_once('Dropbox/Dropbox/OAuth/Storage/StorageInterface.php');
+			require_once('Dropbox/Dropbox/OAuth/Storage/Session.php');
+			require_once('Dropbox/Dropbox/OAuth/Consumer/ConsumerAbstract.php');
+			require_once('Dropbox/Dropbox/OAuth/Consumer/Curl.php');
+			require_once('Dropbox/examples/bootstrap.php');
+			// If you use this, comment out lines 44-47
+			//$encrypter = new \Dropbox\OAuth\Storage\Encrypter('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
+			$storage = new \Dropbox\OAuth\Storage\Session();
+
+			// Instantiate the filesystem store and set the token directory
+			// Note: If you use this, comment out lines 44-47 and 50
+			//$storage = new \Dropbox\OAuth\Storage\Filesystem($encrypter, $userID);
+			//$storage->setDirectory('tokens');
+
+			$OAuth = new \Dropbox\OAuth\Consumer\Curl(
+					$this->oauth_consumer_key, 
+					$this->oauth_consumer_secret, $storage, $this->callback_url);
+			$this->log($OAuth);
+			$dropbox = new \Dropbox\API($OAuth);
+			$dropbox = new Dropbox\API($OAuth);
+			ar_print($dropbox);
+			 * 
+			 */
+			
 		}
 		
 		function check_error(array $response) {
@@ -71,6 +101,22 @@ if (!class_exists("Dropbox_API_Module")):
 		}
 
 		/**
+		 * Override to add access token as param on post url.
+		 * @param array $response
+		 * @return array 
+		 */
+		function get_access_token( $response ){
+			$this->token = $response['oauth_token'];
+			$this->log("access tokens");
+			$this->log($this);
+			$res = $this->request( $this->url_access_token, "POST", array(
+				'oauth_token_secret' => $this->oauth_token_secret
+			));
+			$this->log($res);
+			return $res;
+		}
+		
+		/**
 		 * Override get_authorize_url to add the callback parameter
 		 * @param array $params
 		 * @return string The authorize url 
@@ -100,14 +146,21 @@ if (!class_exists("Dropbox_API_Module")):
 			//sign request
 			$method = strtoupper($method);
 			$request = $this->oauth_sign_request($uri, $method, $parameters);
-			
-			if ($method == 'POST')
-				$url = $request->get_normalized_http_url();
+			$this->headers = $request->to_header("https://api.dropbox.com/");
+			if ($method == 'POST'){
+				$url = $request->get_normalized_http_url();		
+				$parameters = array_merge($request->get_parameters(), $parameters);
+				$this->log("Parameters");
+				$this->log($parameters);
+			}
 			else
 				$url = $request->to_url();
+			
 			if(!$die){
 				ar_print($url);
+				ar_print($request->to_header("https://api.dropbox.com/"));
 			}
+			
 			//send and return result
 			return parent::request($url, $method, $parameters, $die);
 		}

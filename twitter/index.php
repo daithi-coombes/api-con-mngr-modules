@@ -33,6 +33,7 @@ if (!class_exists('API_Con_Twitter')):
 				'callback_url' => '%s'
 			);
 			$this->protocol = 'oauth1';
+			$this->sha1_method = true;
 			$this->use_nonce = false;
 			$this->url_access_token = "https://api.twitter.com/oauth/access_token";
 			$this->url_authorize = "https://api.twitter.com/oauth/authorize";
