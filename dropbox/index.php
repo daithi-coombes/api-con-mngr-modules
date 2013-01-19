@@ -107,13 +107,14 @@ if (!class_exists("Dropbox_API_Module")):
 		 */
 		function get_access_token( $response ){
 			$this->token = $response['oauth_token'];
-			$this->log("access tokens");
-			$this->log($this);
+			$this->log("getting access tokens");
 			$res = $this->request( $this->url_access_token, "POST", array(
 				'oauth_token_secret' => $this->oauth_token_secret
 			));
-			$this->log($res);
-			return $res;
+			$tokens = (array) $this->parse_response($res);
+			$this->set_params($tokens);
+			$this->log($tokens);
+			return $tokens;
 		}
 		
 		/**
