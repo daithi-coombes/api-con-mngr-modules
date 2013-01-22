@@ -98,7 +98,7 @@ if (!class_exists('API_Con_Twitter')):
 		 * value pairs
 		 * @return array Returns the response array in the WP_HTTP format. 
 		 */
-		function request( $uri, $method, $parameters=array() ){
+		function request( $uri, $method, $parameters=array(),$die=true ){
 			
 			//make sure parameters are loaded
 			$this->get_params();
@@ -115,7 +115,7 @@ if (!class_exists('API_Con_Twitter')):
 
 			//send and return result
 			$this->headers = $request->to_header();
-			return parent::request( $url, $method, $parameters );
+			return parent::request( $url, $method, $parameters, false );
 		}
 		
 		function get_request_token(){
@@ -137,6 +137,10 @@ if (!class_exists('API_Con_Twitter')):
 		 * @return boolean 
 		 */
 		function verify_token(){
+			$this->log("Verifiing twitter token");
+			$res = $this->request("https://api.twitter.com/1/account/verify_credentials.json", "GET", array(), false);
+			if(is_wp_error($this->check_error($res)))
+				return false;
 			return true;
 		}
 	}

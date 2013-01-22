@@ -185,7 +185,18 @@ if (!class_exists("Dropbox_API_Module")):
 			if(empty($this->oauth_token) || empty($this->oauth_token_secret))
 				return false;
 			
-			$res = $this->request("https://api.dropbox.com/1/account/info", "GET", null, false);
+			$this->log("verify dropbox token:");
+			$this->log($this);
+				$res = $module->request(
+						"https://api.dropbox.com/1/account/info",
+						"get",
+						array(),
+						false
+				);
+				
+			//$res = $this->request("https://api.dropbox.com/1/account/info", "POST", null, false);
+			$this->log("response:");
+			$this->log($res);
 			if(is_wp_error($res))
 				return false;
 			
