@@ -49,4 +49,4 @@ if(!class_exists("Google_API")):
 		}
 	}
 endif;
-$oauth2 = new Google_API();
+$module = new Google_API();

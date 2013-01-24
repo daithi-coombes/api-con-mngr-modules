@@ -71,4 +71,4 @@ if(!class_exists("MailChimp_API")):
 		}
 	}
 endif;
-$oauth2 = new MailChimp_API();
+$module = new MailChimp_API();

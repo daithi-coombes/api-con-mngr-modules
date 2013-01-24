@@ -206,4 +206,4 @@ if (!class_exists("Dropbox_API_Module")):
 
 	endif;
 
-$oauth1 = new Dropbox_API_Module();
+$module = new Dropbox_API_Module();
