@@ -76,7 +76,7 @@ if (!class_exists("Dropbox_API_Module")):
 		 * Use GET url to make POST request for the access token.
 		 * @param stdClass $dto 
 		 */
-		function do_login($dto) {
+		function do_login(stdClass $dto) {
 
 			//set params
 			$this->set_params(array(
@@ -105,7 +105,7 @@ if (!class_exists("Dropbox_API_Module")):
 		 * @param array $response
 		 * @return array 
 		 */
-		function get_access_token( $response ){
+		function get_access_token( array $response ){
 			$this->token = $response['oauth_token'];
 			$this->log("getting access tokens");
 			$this->log($this);
@@ -124,7 +124,7 @@ if (!class_exists("Dropbox_API_Module")):
 		 * @param array $params
 		 * @return string The authorize url 
 		 */
-		function get_authorize_url($params) {
+		function get_authorize_url($params=array()) {
 			$params['oauth_callback'] = $this->callback_url;
 			return parent::get_authorize_url($params);
 		}

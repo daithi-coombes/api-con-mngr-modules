@@ -24,7 +24,7 @@ if(!class_exists("GitHub_API")):
 			return false;
 		}
 		
-		function get_authorize_url(){
+		function get_authorize_url( $params=array() ){
 			
 			return parent::get_authorize_url(array(
 				'scope' => 'repo, user'

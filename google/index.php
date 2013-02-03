@@ -31,7 +31,7 @@ if(!class_exists("Google_API")):
 		 * Override the authorize url to add scope and redirect_uri params
 		 * @return string The authorize url
 		 */
-		function get_authorize_url(){
+		function get_authorize_url( $params=array() ){
 			return parent::get_authorize_url(array(
 				'scope' => $this->scope,
 				'redirect_uri' => $this->redirect_uri

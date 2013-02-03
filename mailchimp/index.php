@@ -55,7 +55,7 @@ if(!class_exists("MailChimp_API")):
 			return false;
 		}
 		
-		function request($url, $method = 'GET', $parameters = array()) {
+		function request($url, $method = 'GET', $parameters = array(), $die=true) {
 			
 			//build uri
 			

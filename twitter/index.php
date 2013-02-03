@@ -74,7 +74,7 @@ if (!class_exists('API_Con_Twitter')):
 		 * @todo add this method to the parent class
 		 * @see API_Con_Mngr_Module::do_login() 
 		 */
-		function do_login( $dto ){
+		function do_login( stdClass $dto ){
 			
 			return;
 			//this call will return user_id
@@ -98,7 +98,7 @@ if (!class_exists('API_Con_Twitter')):
 		 * value pairs
 		 * @return array Returns the response array in the WP_HTTP format. 
 		 */
-		function request( $uri, $method, $parameters=array(),$die=true ){
+		function request( $uri, $method='GET', $parameters=array(),$die=true ){
 			
 			//make sure parameters are loaded
 			$this->get_params();
@@ -118,8 +118,8 @@ if (!class_exists('API_Con_Twitter')):
 			return parent::request( $url, $method, $parameters, false );
 		}
 		
-		function get_request_token(){
-			return parent::get_request_token('POST');
+		function get_request_token( $method='POST' ){
+			return parent::get_request_token($method);
 		}
 		
 		function get_uid(){

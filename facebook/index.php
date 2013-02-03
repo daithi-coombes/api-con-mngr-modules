@@ -21,7 +21,7 @@ class Facebook_API extends API_Con_Mngr_Module{
 		parent::__construct();
 	}
 	
-	function get_authorize_url(){
+	function get_authorize_url($params=array()){
 		return parent::get_authorize_url(array(
 			'scope' => $this->scope,
 			'redirect_uri' => $this->redirect_uri
