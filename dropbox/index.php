@@ -187,7 +187,7 @@ if (!class_exists("Dropbox_API_Module")):
 			
 			$this->log("verify dropbox token:");
 			$this->log($this);
-				$res = $module->request(
+				$res = $this->request(
 						"https://api.dropbox.com/1/account/info",
 						"get",
 						array(),
