@@ -128,6 +128,7 @@ if (!class_exists("Dropbox_API_Module")):
 			$params['oauth_callback'] = $this->callback_url;
 			$this->log("Dropbox get_authorize_url()::");
 			$this->log($params);
+			ar_print($params);
 			return parent::get_authorize_url($params);
 		}
 		
