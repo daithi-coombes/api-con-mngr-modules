@@ -11,13 +11,17 @@ if(!class_exists("MailChimp_API")):
 	class MailChimp_API extends API_Con_Mngr_Module{
 
 		/** @var string Default us1. The endpoint datacenter prefix */
-		private $dc = "us1";
+		public $dc = "us1";
+		public $login_url = "";
+		public $api_endpoint = "";
 	
 		function __construct(){
 
 			//set params
+			$this->endpoint = "https://login.mailchimp.com";
 			$this->protocol = "oauth2";
 			$this->sessions = true;
+			$this->options['apikey'] = '%s';
 			$this->url_authorize = "https://login.mailchimp.com/oauth2/authorize";
 			$this->url_access_token = "https://login.mailchimp.com/oauth2/token";
 
@@ -25,6 +29,22 @@ if(!class_exists("MailChimp_API")):
 			parent::__construct();
 		}
 
+		/**
+		 * Hook into a successfull login to get and set the endpoint params
+		 * 
+		 * @param stdClass $dto
+		 */
+		function do_login( stdClass $dto ){
+			
+			$this->log("mailchimp do_login():");
+			
+			$res = $this->request(
+					"https://login.mailchimp.com/oauth2/metadata"
+					);
+			$params = (array) json_decode($res['body']);
+			$this->set_params($params);
+		}
+		
 		/**
 		 * Override the get_authorize_url as mailchimp doesn't handle the
 		 * redirect_uri params 
@@ -57,8 +77,13 @@ if(!class_exists("MailChimp_API")):
 		
 		function request($url, $method = 'GET', $parameters = array(), $die=true) {
 			
-			//build uri
+			//build url
+			if(!empty($this->api_endpoint))
+				$url = $this->api_endpoint ."/1.3/?method={$url}";
 			
+			$this->headers = array(
+				'Authorization' => "OAuth {$this->access_token}"
+			);
 			return parent::request($url, $method, $parameters);
 		}
 
