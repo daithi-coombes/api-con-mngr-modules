@@ -24,11 +24,19 @@ if(!class_exists("Google_API")):
 		}
 		
 		function check_error(array $response) {
-			$body = json_decode($response['body']);
-			if($body->error){
-				$this->log("Error found: " . $body->error->message);
-				return new WP_Error("GAuth", $body->error->message);
+			
+			//if response body, check for error
+			if(@$response['body']){
+				$body = json_decode($response['body']);
+				
+				//error found
+				if($body->error){
+					$this->log("Error found: " . $body->error->message);
+					return new WP_Error("GAuth", $body->error->message);
+				}
 			}
+			
+			//default no error
 			return false;
 		}
 		
