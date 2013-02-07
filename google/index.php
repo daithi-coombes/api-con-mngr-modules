@@ -30,10 +30,8 @@ if(!class_exists("Google_API")):
 				$body = json_decode($response['body']);
 				
 				//error found
-				if($body->error){
-					$this->log("Error found: " . $body->error->message);
+				if($body->error)
 					return new WP_Error("GAuth", $body->error->message);
-				}
 			}
 			
 			//default no error
