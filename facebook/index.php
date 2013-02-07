@@ -28,7 +28,7 @@ class Facebook_API extends API_Con_Mngr_Module{
 		));
 	}
 	
-		function get_uid(){}
+	function get_uid(){}
 		
 	public function check_error(array $response) {
 		return false;
@@ -38,7 +38,7 @@ class Facebook_API extends API_Con_Mngr_Module{
 		 * Verify token
 		 * @return boolean 
 		 */
-		function verify_token(){
+	function verify_token(){
 			
 			if(empty($this->access_token))
 				return false;
