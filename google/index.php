@@ -10,7 +10,7 @@
 
 if(!class_exists("Google_API")):
 	class Google_API extends API_Con_Mngr_Module{
-
+		
 		function __construct(){
 			
 			$this->options = array(
@@ -22,9 +22,14 @@ if(!class_exists("Google_API")):
 
 			parent::__construct();
 		}
-
+		
 		function check_error(array $response) {
-			;
+			$body = json_decode($response['body']);
+			if($body->error){
+				$this->log("Error found: " . $body->error->message);
+				return new WP_Error("GAuth", $body->error->message);
+			}
+			return false;
 		}
 		
 		/**
@@ -37,7 +42,7 @@ if(!class_exists("Google_API")):
 				'redirect_uri' => $this->redirect_uri
 			));
 		}
-
+		
 		function get_uid(){}
 		
 		/**
