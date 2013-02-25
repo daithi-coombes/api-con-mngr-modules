@@ -31,7 +31,7 @@ if(!class_exists("Google_API")):
 				
 				//error found
 				if(@$body->error)
-					return new WP_Error("GAuth", $body->error->message);
+					return new WP_Error("GAuth", $body->error);
 			}
 			
 			//default no error
