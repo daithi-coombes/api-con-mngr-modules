@@ -49,14 +49,21 @@ if(!class_exists("Google_API")):
 			));
 		}
 		
-		function get_uid(){}
+		function get_uid(){
+			$res = $this->request("https://www.googleapis.com/oauth2/v1/userinfo");
+			if($this->check_error($res))
+				return false;
+			return true;
+		}
 		
 		/**
 		 * Verify token
 		 * @return boolean 
 		 */
 		function verify_token(){
-			return true;
+			if(!$this->get_uid())
+				return false;
+			else return true;
 		}
 	}
 endif;
