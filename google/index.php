@@ -56,6 +56,11 @@ if(!class_exists("Google_API")):
 			return true;
 		}
 		
+		function request($url, $method='GET', $params=array(), $die=true){
+			$params['access_token'] = $this->access_token;
+			return parent::request($url, $method, $params, $die);
+		}
+		
 		/**
 		 * Verify token
 		 * @return boolean 
