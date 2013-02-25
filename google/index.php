@@ -61,6 +61,8 @@ if(!class_exists("Google_API")):
 		 * @return boolean 
 		 */
 		function verify_token(){
+			$this->log("google module:");
+			$this->log($this);
 			if(!$this->get_uid(false))
 				return false;
 			else return true;
