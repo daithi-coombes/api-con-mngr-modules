@@ -36,8 +36,10 @@ if(!class_exists("CityIndex_API")):
 		}
 		
 		function get_uid(){
-			if($this->access_token)
-				return explode (":", $this->access_token)[0];
+			if($this->access_token){
+				$parts = explode (":", $this->access_token);
+				return $parts[0];
+			}
 			return false;
 		}
 		
