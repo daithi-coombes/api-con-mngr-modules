@@ -58,7 +58,6 @@ if(!class_exists("Google_API")):
 		
 		function request($url, $method='GET', $params=array(), $die=true){
 			$params['access_token'] = $this->access_token;
-			$params['v'] = "3.0";
 			return parent::request($url, $method, $params, $die);
 		}
 		
