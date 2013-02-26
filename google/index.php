@@ -50,14 +50,17 @@ if(!class_exists("Google_API")):
 		}
 		
 		function get_uid( $die=true ){
-			$res = $this->request("https://www.googleapis.com/oauth2/v1/userinfo", 'GET', array(), $die);
+			$res = $this->request(
+						"https://www.googleapis.com/oauth2/v1/userinfo?access_token={$this->access_token}",
+						"GET"
+						);
 			if($this->check_error($res))
 				return false;
 			return true;
 		}
 		
 		function request($url, $method='GET', $params=array(), $die=true){
-			$params['access_token'] = $this->access_token;
+			//$params['access_token'] = $this->access_token;
 			return parent::request($url, $method, $params, $die);
 		}
 		
