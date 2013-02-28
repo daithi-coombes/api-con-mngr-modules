@@ -16,6 +16,7 @@ if (!class_exists("Dropbox_API_Module")):
 		public $user_id;
 
 		function __construct() {
+			
 			//set params
 			$this->protocol = 'oauth1';
 			$this->sha1_method = false;
@@ -30,7 +31,6 @@ if (!class_exists("Dropbox_API_Module")):
 				'callback_url' => '%s'
 			);
 			parent::__construct();
-
 			$this->get_params();
 			/**
 			//test dropbox sdk
@@ -150,13 +150,11 @@ if (!class_exists("Dropbox_API_Module")):
 		 */
 		function request($uri, $method='GET', $parameters = array(), $die=true) {
 			
-			//make sure we have the params
-			$this->get_params();
-			
 			//sign request
+			$this->log($this);
 			$method = strtoupper($method);
 			$request = $this->oauth_sign_request($uri, $method, $parameters);
-			$this->headers = $request->to_header("https://api.dropbox.com/");
+			$this->headers = $request->to_header();
 			if ($method == 'POST'){
 				$url = $request->get_normalized_http_url();		
 				$parameters = array_merge($request->get_parameters(), $parameters);

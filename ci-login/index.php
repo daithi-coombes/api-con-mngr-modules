@@ -19,7 +19,7 @@ if(!class_exists("CityIndex_API")):
 		function __construct(){
 			
 			$this->protocol = "oauth2";
-			$this->url_authorize = $this->endpoint . "/token";
+			$this->url_authorize = $this->endpoint . "/authorize";
 			$this->url_access_token = $this->endpoint . "/token";
 			
 			parent::__construct();
