@@ -92,6 +92,10 @@ if(!class_exists("MailChimp_API")):
 		 */
 		function request($api_method, $method = 'GET', $parameters = array(), $die=true) {
 			
+			$this->log("MailChimp::request()");
+			$this->log(func_get_args());
+			$this->log(debug_backtrace(null, 1));
+			
 			//build url
 			if(!empty($this->api_endpoint))
 				$url = $this->api_endpoint ."/1.3/?method={$api_method}";
