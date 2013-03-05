@@ -31,7 +31,27 @@ if(!class_exists("GitHub_API")):
 			));
 		}
 
-		function get_uid(){}
+		function get_uid(){
+			
+			//get user details
+			$res = $this->request(
+				"https://api.github.com/user", //?access_token={$dto->response['access_token']}&scope=user,public_repo",
+				"get",
+				array(
+					'scope' => 'user,public_repo'
+				)
+			);
+			$body = json_decode($res['body']);
+			return $body->id;
+		}
+		
+		public function request($url, $method='GET', $parameters = array(), $die=true) {
+			
+			if(strtolower($method)=='get')
+				$parameters['access_token'] = $this->access_token;
+			
+			return parent::request($url, $method, $parameters, $die);
+		}
 		
 		/**
 		 * Verify token
