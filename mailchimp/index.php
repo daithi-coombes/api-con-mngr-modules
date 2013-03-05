@@ -97,7 +97,7 @@ if(!class_exists("MailChimp_API")):
 			$this->log(debug_backtrace(null, 1));
 			
 			//build url
-			if(!empty($this->api_endpoint))
+			if(!preg_match("/https/", $api_method))	//token request from api-con will have the full url
 				$url = $this->api_endpoint ."/1.3/?method={$api_method}";
 			
 			$this->headers = array(
