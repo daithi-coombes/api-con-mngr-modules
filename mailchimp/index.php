@@ -94,11 +94,17 @@ if(!class_exists("MailChimp_API")):
 			
 			$this->log("MailChimp::request()");
 			$this->log(func_get_args());
-			$this->log(debug_backtrace(null, 1));
+			$this->log(debug_backtrace());
 			
-			//build url
-			if(!preg_match("/https/", $api_method))	//token request from api-con will have the full url
+			/**
+			 * build url
+			 */
+			if(!preg_match("/https/", $api_method))
 				$url = $this->api_endpoint ."/1.3/?method={$api_method}";
+				
+			else//token request from api-con will have the full url
+				$url = $api_method;
+			//end build url
 			
 			$this->headers = array(
 				'Authorization' => "OAuth {$this->access_token}"
