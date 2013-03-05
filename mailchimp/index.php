@@ -58,7 +58,12 @@ if(!class_exists("MailChimp_API")):
 			return $this->url_authorize . "?" . http_build_query($fields);
 		}
 		
-		function get_uid(){}
+		function get_uid(){
+			
+			$res = $this->request('getAccountDetails');
+			$body = json_decode($res['body']);
+			return $body->user_id;
+		}
 		
 		/**
 		 * return false if no error or error string if one
@@ -75,11 +80,21 @@ if(!class_exists("MailChimp_API")):
 			return false;
 		}
 		
-		function request($url, $method = 'GET', $parameters = array(), $die=true) {
+		/**
+		 * Call this method by passing the MailChimp API as the first param
+		 * instead of the url as in other modules.
+		 * 
+		 * @param string $api_method The MailChimp API method to call.
+		 * @param type $method
+		 * @param type $parameters
+		 * @param type $die
+		 * @return type
+		 */
+		function request($api_method, $method = 'GET', $parameters = array(), $die=true) {
 			
 			//build url
 			if(!empty($this->api_endpoint))
-				$url = $this->api_endpoint ."/1.3/?method={$url}";
+				$url = $this->api_endpoint ."/1.3/?method={$api_method}";
 			
 			$this->headers = array(
 				'Authorization' => "OAuth {$this->access_token}"
