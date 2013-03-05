@@ -11,6 +11,7 @@ if(!class_exists("MailChimp_API")):
 	class MailChimp_API extends API_Con_Mngr_Module{
 
 		/** @var string Default us1. The endpoint datacenter prefix */
+		public $apikey = "";
 		public $dc = "us1";
 		public $login_url = "";
 		public $api_endpoint = "";
@@ -60,7 +61,7 @@ if(!class_exists("MailChimp_API")):
 		
 		function get_uid(){
 			
-			$res = $this->request('getAccountDetails');
+			$res = $this->request('getAccountDetails', 'post', array());
 			$body = json_decode($res['body']);
 			return $body->user_id;
 		}
@@ -109,6 +110,7 @@ if(!class_exists("MailChimp_API")):
 			$this->headers = array(
 				'Authorization' => "OAuth {$this->access_token}"
 			);
+			$parameters['apikey'] = $this->apikey;
 			return parent::request($url, $method, $parameters);
 		}
 
