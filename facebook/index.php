@@ -38,7 +38,7 @@ class Facebook_API extends API_Con_Mngr_Module{
 		return false;
 	}
 
-	function request($url, $method, $parameters, $die){
+	function request($url, $method='GET', $parameters = array(), $die=true){
 		
 		if(strtolower($method)=='get')
 			$parameters['access_token'] = $this->access_token;
