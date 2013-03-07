@@ -32,7 +32,8 @@ if(!class_exists("CityIndex_API")):
 		
 		function get_authorize_url( $params=array() ){
 			return parent::get_authorize_url(array(
-				'redirect_uri' => $this->callback_url
+				'redirect_uri' => $this->callback_url,
+				'state' => 'somevalue'
 			));
 		}
 		
