@@ -34,14 +34,22 @@ class Facebook_API extends API_Con_Mngr_Module{
 		$this->log($res);
 	}
 		
-	public function check_error(array $response) {
+	function check_error(array $response) {
 		return false;
 	}
 
-		/**
-		 * Verify token
-		 * @return boolean 
-		 */
+	function request($url, $method, $parameters, $die){
+		
+		if(strtolower($method)=='get')
+			$parameters['access_token'] = $this->access_token;
+		
+		return parent::request($url, $method, $parameters, $die);
+	}
+	
+	/**
+	 * Verify token
+	 * @return boolean 
+	 */
 	function verify_token(){
 			
 			if(empty($this->access_token))
