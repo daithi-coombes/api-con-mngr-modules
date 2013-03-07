@@ -28,7 +28,11 @@ class Facebook_API extends API_Con_Mngr_Module{
 		));
 	}
 	
-	function get_uid(){}
+	function get_uid(){
+		$this->log("facebook::get_uid():");
+		$res = $this->request("https://graph.facebook.com/me", 'GET');
+		$this->log($res);
+	}
 		
 	public function check_error(array $response) {
 		return false;
