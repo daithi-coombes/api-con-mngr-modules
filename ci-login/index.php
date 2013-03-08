@@ -40,6 +40,7 @@ if(!class_exists("CityIndex_API")):
 		function get_uid(){
 			if($this->access_token){
 				$parts = explode (":", $this->access_token);
+				$this->log("CI uid => {$parts[0]}");
 				return $parts[0];
 			}
 			return false;
