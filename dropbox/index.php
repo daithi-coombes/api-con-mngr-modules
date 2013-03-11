@@ -136,6 +136,10 @@ if (!class_exists("Dropbox_API_Module")):
 			$this->log($res);
 		}
 		
+		function get_profile(){
+			;
+		}
+		
 		/**
 		 * Override the request method to sign requests.
 		 * 

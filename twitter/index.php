@@ -132,6 +132,10 @@ if (!class_exists('API_Con_Twitter')):
 			return $body->id;
 		}
 		
+		function get_profile(){
+			;
+		}
+		
 		/**
 		 * Verify token
 		 * @return boolean 

@@ -22,6 +22,10 @@ if(!class_exists("FlowDock_API")):
 
 		}
 
+		function get_profile(){
+			;
+		}
+		
 		function request( $url, $method='get', $parameters=array(), $die=true){
 			
 			if(!count($this->headers))

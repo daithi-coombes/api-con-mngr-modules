@@ -35,6 +35,10 @@ class Facebook_API extends API_Con_Mngr_Module{
 		return $body->id;
 	}
 		
+	function get_profile(){
+		;
+	}
+
 	function check_error(array $response) {
 		return false;
 	}

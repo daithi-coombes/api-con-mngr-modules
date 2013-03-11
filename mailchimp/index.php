@@ -66,6 +66,10 @@ if(!class_exists("MailChimp_API")):
 			return $body->user_id;
 		}
 		
+		function get_profile(){
+			;
+		}
+		
 		/**
 		 * return false if no error or error string if one
 		 * @param array $response The serivce response in the WP_Http format

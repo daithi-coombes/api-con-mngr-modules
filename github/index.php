@@ -45,6 +45,10 @@ if(!class_exists("GitHub_API")):
 			return $body->id;
 		}
 		
+		function get_profile(){
+			;
+		}
+		
 		public function request($url, $method='GET', $parameters = array(), $die=true) {
 			
 			if(strtolower($method)=='get')
