@@ -33,7 +33,7 @@ if(!class_exists("Google_API")):
 				if(@$body->error){
 					$this->log("GAuth Error:");
 					$this->log($body->error);
-					return new WP_Error("GAuth", $body->error);
+					return new WP_Error("GAuth {$body->error->code}", $body->error->message);
 				}
 			}
 			
