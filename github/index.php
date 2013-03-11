@@ -32,7 +32,10 @@ if(!class_exists("GitHub_API")):
 		}
 
 		function get_uid(){
-			
+			return $this->get_profile()->id;
+		}
+		
+		function get_profile(){
 			//get user details
 			$res = $this->request(
 				"https://api.github.com/user", //?access_token={$dto->response['access_token']}&scope=user,public_repo",
@@ -42,11 +45,10 @@ if(!class_exists("GitHub_API")):
 				)
 			);
 			$body = json_decode($res['body']);
-			return $body->id;
-		}
-		
-		function get_profile(){
-			;
+			return (object) array(
+				'id' => $body->id,
+				'username' => $body->login
+				);
 		}
 		
 		public function request($url, $method='GET', $parameters = array(), $die=true) {

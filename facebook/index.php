@@ -29,14 +29,16 @@ class Facebook_API extends API_Con_Mngr_Module{
 	}
 	
 	function get_uid(){
-		$this->log("facebook::get_uid():");
-		$res = $this->request("https://graph.facebook.com/me", 'GET');
-		$body = json_decode($res['body']);
-		return $body->id;
+		return $this->get_profile()->id;
 	}
 		
 	function get_profile(){
-		;
+		$res = $this->request("https://graph.facebook.com/me", 'GET');
+		$body = json_decode($res['body']);
+		return (object) array(
+			'id' => $body->id,
+			'username' => $body->name
+		);
 	}
 
 	function check_error(array $response) {

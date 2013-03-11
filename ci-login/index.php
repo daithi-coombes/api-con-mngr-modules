@@ -38,19 +38,32 @@ if(!class_exists("CityIndex_API")):
 		}
 		
 		function get_profile(){
-			;
+			
+			$res = $this->request("https://ciapipreprod.cityindextest9.co.uk/TradingApi/useraccount/ClientAndTradingAccount");
+			$res = $this->request("http://ec2-23-21-217-245.compute-1.amazonaws.com/TradingApi/useraccount/ClientAndTradingAccount");
+			$this->log($res);
+		
+			return (object) array(
+				'username' =>  'Foo Bar'
+			);
 		}
 		
 		function get_uid(){
 			if($this->access_token){
 				$parts = explode (":", $this->access_token);
-				$this->log("CI uid => {$parts[0]}");
 				return $parts[0];
 			}
 			return false;
 		}
 		
 		function request($url, $method="get", $parameters=array(), $die=true){
+			
+			//headers
+			if($this->access_token){
+				$this->headers = array(
+					'Content-Type' => 'application/json', 'UserName' => $this->get_uid(), 'Session' => $this->access_token,
+				);
+			}
 			
 			return parent::request($url, $method, $parameters, $die);
 		}

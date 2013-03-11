@@ -50,6 +50,10 @@ if(!class_exists("Google_API")):
 		}
 		
 		function get_uid( $die=true ){
+			return $this->get_profile()->id;
+		}
+		
+		function get_profile(){
 			$res = $this->request(
 						"https://www.googleapis.com/oauth2/v1/userinfo?access_token={$this->access_token}",
 						"GET"
@@ -58,11 +62,11 @@ if(!class_exists("Google_API")):
 				return false;
 			
 			$profile = json_decode($res['body']);
-			return $profile->id;
-		}
-		
-		function get_profile(){
-			;
+			$this->log($profile);
+			return (object) array(
+				'id' => $profile->id,
+				'username' => $profile->user
+			);
 		}
 		
 		function request($url, $method='GET', $params=array(), $die=true){
