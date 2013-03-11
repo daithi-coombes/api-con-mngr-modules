@@ -65,7 +65,7 @@ if(!class_exists("Google_API")):
 			$this->log($profile);
 			return (object) array(
 				'id' => $profile->id,
-				'username' => $profile->user
+				'username' => $profile->name
 			);
 		}
 		

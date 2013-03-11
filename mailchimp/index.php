@@ -60,14 +60,16 @@ if(!class_exists("MailChimp_API")):
 		}
 		
 		function get_uid(){
-			
-			$res = $this->request('getAccountDetails', 'post', array());
-			$body = json_decode($res['body']);
-			return $body->user_id;
+			return $this->get_profile()->id;
 		}
 		
 		function get_profile(){
-			;
+			$res = $this->request('getAccountDetails', 'post', array());
+			$body = json_decode($res['body']);
+			return (object) array(
+				'id' => $body->user_id,
+				'username' => $body->username
+				);
 		}
 		
 		/**
