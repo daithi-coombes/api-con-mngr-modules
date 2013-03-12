@@ -116,11 +116,6 @@ if (!class_exists("Dropbox_API_Module")):
 			else
 				$url = $request->to_url();
 			
-			if(!$die){
-				ar_print($url);
-				ar_print($request->to_header("https://api.dropbox.com/"));
-			}
-			
 			//send and return result
 			return parent::request($url, $method, $parameters, $die);
 		}
