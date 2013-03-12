@@ -32,35 +32,7 @@ if (!class_exists("Dropbox_API_Module")):
 			);
 			parent::__construct();
 			$this->get_params();
-			/**
-			//test dropbox sdk
-			require_once('Dropbox/Dropbox/API.php');
-			require_once('Dropbox/Dropbox/Exception.php');
-			require_once('Dropbox/Dropbox/OAuth/Storage/Encrypter.php');
-			require_once('Dropbox/Dropbox/OAuth/Storage/StorageInterface.php');
-			require_once('Dropbox/Dropbox/OAuth/Storage/Session.php');
-			require_once('Dropbox/Dropbox/OAuth/Consumer/ConsumerAbstract.php');
-			require_once('Dropbox/Dropbox/OAuth/Consumer/Curl.php');
-			require_once('Dropbox/examples/bootstrap.php');
-			// If you use this, comment out lines 44-47
-			//$encrypter = new \Dropbox\OAuth\Storage\Encrypter('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
-			$storage = new \Dropbox\OAuth\Storage\Session();
-
-			// Instantiate the filesystem store and set the token directory
-			// Note: If you use this, comment out lines 44-47 and 50
-			//$storage = new \Dropbox\OAuth\Storage\Filesystem($encrypter, $userID);
-			//$storage->setDirectory('tokens');
-
-			$OAuth = new \Dropbox\OAuth\Consumer\Curl(
-					$this->oauth_consumer_key, 
-					$this->oauth_consumer_secret, $storage, $this->callback_url);
-			$this->log($OAuth);
-			$dropbox = new \Dropbox\API($OAuth);
-			$dropbox = new Dropbox\API($OAuth);
-			ar_print($dropbox);
-			 * 
-			 */
-			
+			$this->log($this);
 		}
 		
 		function check_error(array $response) {
@@ -70,34 +42,6 @@ if (!class_exists("Dropbox_API_Module")):
 				return $this->error($body->error);
 
 			return true;
-		}
-
-		/**
-		 * Use GET url to make POST request for the access token.
-		 * @param stdClass $dto 
-		 */
-		function do_login(stdClass $dto) {
-
-			//set params
-			$this->set_params(array(
-				'user_id' => $dto->response['uid']
-			));
-			
-			//post fields and signed request
-			$params = array(
-				'oauth_consumer_key' => $this->oauth_consumer_key,
-				'oauth_token' => $this->oauth_token
-			);			
-			$url = $this->oauth_sign_request($this->url_access_token, "POST", $params);
-			
-			//make request
-			$res = parent::request($url->to_url(), "POST", $params);
-			
-			//store params
-			$tokens = array();
-			parse_str($res['body'], $tokens);
-			$tokens['token'] = $tokens['oauth_token'];
-			$this->set_params($tokens);
 		}
 
 		/**
@@ -116,6 +60,7 @@ if (!class_exists("Dropbox_API_Module")):
 			$tokens = (array) $this->parse_response($res);
 			$this->set_params($tokens);
 			$this->log($tokens);
+			//die();
 			return $tokens;
 		}
 		
@@ -130,14 +75,17 @@ if (!class_exists("Dropbox_API_Module")):
 		}
 		
 		function get_uid(){
-			$res = $this->request(
-					"https://api.dropbox.com/1/account/info", "get");
-			$this->log("get_uid");
-			$this->log($res);
+			return $this->get_profile()->id;
 		}
 		
 		function get_profile(){
-			;
+			$res = $this->request(
+					"https://api.dropbox.com/1/account/info", "get");
+			$body = json_decode($res['body']);
+			return (object) array(
+				'id' => $body->uid,
+				'username' => $body->display_name
+					);
 		}
 		
 		/**
