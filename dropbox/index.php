@@ -56,7 +56,7 @@ if (!class_exists("Dropbox_API_Module")):
 			$res = $this->request( $this->url_access_token, "POST", array(
 				'oauth_token_secret' => $this->oauth_token_secret,
 				'oauth_token' => $this->oauth_token
-			));
+			), false);
 			$tokens = (array) $this->parse_response($res);
 			$this->set_params($tokens);
 			$this->log($tokens);
