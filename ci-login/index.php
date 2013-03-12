@@ -39,13 +39,11 @@ if(!class_exists("CityIndex_API")):
 		
 		function get_profile(){
 			
-			//$res = $this->request("https://ciapipreprod.cityindextest9.co.uk/TradingApi/useraccount/ClientAndTradingAccount");
 			$res = $this->request("https://ciapi.cityindex.com/tradingapi/useraccount/ClientAndTradingAccount");
-			//$res = $this->request("http://ec2-23-21-217-245.compute-1.amazonaws.com/TradingApi/useraccount/ClientAndTradingAccount");
-			$this->log($res);
-		
+			$body = json_decode($res['body']);
 			return (object) array(
-				'username' =>  'Foo Bar'
+				'username' =>  $body->LogonUserName,
+				'id' => $this->get_uid()
 			);
 		}
 		
@@ -61,25 +59,18 @@ if(!class_exists("CityIndex_API")):
 			
 			//headers
 			if($this->access_token){
-				/**
+				
+				//split token into user and session
+				$parts = explode(":", $this->access_token);
+				$uid = $parts[0];
+				$session = $parts[1];
+				
 				$this->headers = array(
-					'Content-Type' => 'application/json', 'UserName' => $this->get_uid(), 'Session' => $this->access_token,
-				);*/
-				$parameters = array(
-					'userName' => $this->get_uid(),
-					'session' => urldecode($this->access_token)
+					'Content-Type' => 'application/json', 'userName' => $uid, 'Session' => $session,
 				);
-				$url .= "?";
-				$ar = array();
-				foreach($parameters as $key=>$val)
-					$ar[] = "{$key}={$val}";
-				$url .= implode("&", $ar);
 			}
-			$this->log($url);
-			$response = wp_remote_get($url, array('headers' => $this->headers));
-			$this->log($response);
-			return $response;
-			//return parent::request($url, $method, $parameters, $die);
+			
+			return parent::request($url, $method, $parameters, $die);
 		}
 		
 		function verify_token(){
