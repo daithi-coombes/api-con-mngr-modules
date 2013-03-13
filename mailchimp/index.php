@@ -28,6 +28,7 @@ if(!class_exists("MailChimp_API")):
 
 			//construct parent
 			parent::__construct();
+			$this->get_params();
 		}
 
 		/**
@@ -99,9 +100,6 @@ if(!class_exists("MailChimp_API")):
 		 */
 		function request($api_method, $method = 'GET', $parameters = array(), $die=true) {
 			
-			$this->log("MailChimp::request()");
-			$this->log(func_get_args());
-			$this->log(debug_backtrace());
 			
 			/**
 			 * build url
@@ -117,7 +115,7 @@ if(!class_exists("MailChimp_API")):
 				'Authorization' => "OAuth {$this->access_token}"
 			);
 			$parameters['apikey'] = $this->apikey;
-			return parent::request($url, $method, $parameters);
+			return parent::request($url, $method, $parameters, $die);
 		}
 
 		/**
