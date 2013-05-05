@@ -32,7 +32,6 @@ if (!class_exists("Dropbox_API_Module")):
 			);
 			parent::__construct();
 			$this->get_params();
-			$this->log($this);
 		}
 		
 		function check_error(array $response) {
