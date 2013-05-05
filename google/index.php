@@ -31,8 +31,8 @@ if(!class_exists("Google_API")):
 				
 				//error found
 				if(@$body->error){
-					$this->log("GAuth Error:");
-					$this->log($body->error);
+					api_con_log("GAuth Error:");
+					api_con_log($body->error);
 					if(is_string($body->error))
 						return new WP_Error ("Gauth", $body->error);
 					else
