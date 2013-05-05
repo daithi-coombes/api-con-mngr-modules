@@ -123,13 +123,18 @@ if (!class_exists('API_Con_Twitter')):
 		}
 		
 		function get_uid(){
-			$this->log("Getting uid...");
-			$params = $this->get_params();
-			$this->log($this);
-			$this->log($params);
 			$res = $this->request("https://api.twitter.com/1.1/account/verify_credentials.json", "GET");
 			$body = $this->parse_response($res);
 			return $body->id;
+		}
+		
+		function get_profile(){
+			$res = $this->request("https://api.twitter.com/1.1/account/verify_credentials.json", "GET");
+			$body = $this->parse_response($res);
+			return (object) array(
+				'id' => $body->id,
+				'username' => $body->name
+					);
 		}
 		
 		/**

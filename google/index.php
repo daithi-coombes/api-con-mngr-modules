@@ -30,8 +30,14 @@ if(!class_exists("Google_API")):
 				$body = json_decode($response['body']);
 				
 				//error found
-				if(@$body->error)
-					return new WP_Error("GAuth", $body->error);
+				if(@$body->error){
+					$this->log("GAuth Error:");
+					$this->log($body->error);
+					if(is_string($body->error))
+						return new WP_Error ("Gauth", $body->error);
+					else
+						return new WP_Error("GAuth {$body->error->code}", $body->error->message);
+				}
 			}
 			
 			//default no error
@@ -50,6 +56,10 @@ if(!class_exists("Google_API")):
 		}
 		
 		function get_uid( $die=true ){
+			return $this->get_profile()->id;
+		}
+		
+		function get_profile(){
 			$res = $this->request(
 						"https://www.googleapis.com/oauth2/v1/userinfo?access_token={$this->access_token}",
 						"GET"
@@ -58,7 +68,11 @@ if(!class_exists("Google_API")):
 				return false;
 			
 			$profile = json_decode($res['body']);
-			return $profile->id;
+			$this->log($profile);
+			return (object) array(
+				'id' => $profile->id,
+				'username' => $profile->name
+			);
 		}
 		
 		function request($url, $method='GET', $params=array(), $die=true){

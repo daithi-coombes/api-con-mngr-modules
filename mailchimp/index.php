@@ -11,6 +11,7 @@ if(!class_exists("MailChimp_API")):
 	class MailChimp_API extends API_Con_Mngr_Module{
 
 		/** @var string Default us1. The endpoint datacenter prefix */
+		public $apikey = "";
 		public $dc = "us1";
 		public $login_url = "";
 		public $api_endpoint = "";
@@ -27,6 +28,7 @@ if(!class_exists("MailChimp_API")):
 
 			//construct parent
 			parent::__construct();
+			$this->get_params();
 		}
 
 		/**
@@ -58,7 +60,18 @@ if(!class_exists("MailChimp_API")):
 			return $this->url_authorize . "?" . http_build_query($fields);
 		}
 		
-		function get_uid(){}
+		function get_uid(){
+			return $this->get_profile()->id;
+		}
+		
+		function get_profile(){
+			$res = $this->request('getAccountDetails', 'post', array());
+			$body = json_decode($res['body']);
+			return (object) array(
+				'id' => $body->user_id,
+				'username' => $body->username
+				);
+		}
 		
 		/**
 		 * return false if no error or error string if one
@@ -75,16 +88,34 @@ if(!class_exists("MailChimp_API")):
 			return false;
 		}
 		
-		function request($url, $method = 'GET', $parameters = array(), $die=true) {
+		/**
+		 * Call this method by passing the MailChimp API as the first param
+		 * instead of the url as in other modules.
+		 * 
+		 * @param string $api_method The MailChimp API method to call.
+		 * @param type $method
+		 * @param type $parameters
+		 * @param type $die
+		 * @return type
+		 */
+		function request($api_method, $method = 'GET', $parameters = array(), $die=true) {
 			
-			//build url
-			if(!empty($this->api_endpoint))
-				$url = $this->api_endpoint ."/1.3/?method={$url}";
+			
+			/**
+			 * build url
+			 */
+			if(!preg_match("/https/", $api_method))
+				$url = $this->api_endpoint ."/1.3/?method={$api_method}";
+				
+			else//token request from api-con will have the full url
+				$url = $api_method;
+			//end build url
 			
 			$this->headers = array(
 				'Authorization' => "OAuth {$this->access_token}"
 			);
-			return parent::request($url, $method, $parameters);
+			$parameters['apikey'] = $this->apikey;
+			return parent::request($url, $method, $parameters, $die);
 		}
 
 		/**
