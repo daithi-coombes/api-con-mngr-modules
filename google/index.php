@@ -68,7 +68,7 @@ if(!class_exists("Google_API")):
 				return false;
 			
 			$profile = json_decode($res['body']);
-			$this->log($profile);
+			api_con_log($profile);
 			return (object) array(
 				'id' => $profile->id,
 				'username' => $profile->name

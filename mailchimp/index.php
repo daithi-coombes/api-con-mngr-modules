@@ -38,7 +38,7 @@ if(!class_exists("MailChimp_API")):
 		 */
 		function do_login( stdClass $dto ){
 			
-			$this->log("mailchimp do_login():");
+			api_con_log("mailchimp do_login():");
 			
 			$res = $this->request(
 					"https://login.mailchimp.com/oauth2/metadata"

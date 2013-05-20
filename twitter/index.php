@@ -142,7 +142,7 @@ if (!class_exists('API_Con_Twitter')):
 		 * @return boolean 
 		 */
 		function verify_token(){
-			$this->log("Verifiing twitter token");
+			api_con_log("Verifiing twitter token");
 			$res = $this->request("https://api.twitter.com/1/account/verify_credentials.json", "GET", array(), false);
 			if(is_wp_error($this->check_error($res)))
 				return false;
