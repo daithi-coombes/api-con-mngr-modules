@@ -50,15 +50,15 @@ if (!class_exists("Dropbox_API_Module")):
 		 */
 		function get_access_token( array $response ){
 			$this->token = $response['oauth_token'];
-			$this->log("getting access tokens");
-			$this->log($this);
+			api_con_log("getting access tokens");
+			api_con_log($this);
 			$res = $this->request( $this->url_access_token, "POST", array(
 				'oauth_token_secret' => $this->oauth_token_secret,
 				'oauth_token' => $this->oauth_token
 			), false);
 			$tokens = (array) $this->parse_response($res);
 			$this->set_params($tokens);
-			$this->log($tokens);
+			api_con_log($tokens);
 			//die();
 			return $tokens;
 		}
@@ -102,15 +102,15 @@ if (!class_exists("Dropbox_API_Module")):
 		function request($uri, $method='GET', $parameters = array(), $die=true) {
 			
 			//sign request
-			$this->log($this);
+			api_con_log($this);
 			$method = strtoupper($method);
 			$request = $this->oauth_sign_request($uri, $method, $parameters);
 			$this->headers = $request->to_header();
 			if ($method == 'POST'){
 				$url = $request->get_normalized_http_url();		
 				$parameters = array_merge($request->get_parameters(), $parameters);
-				$this->log("Parameters");
-				$this->log($parameters);
+				api_con_log("Parameters");
+				api_con_log($parameters);
 			}
 			else
 				$url = $request->to_url();
@@ -129,8 +129,8 @@ if (!class_exists("Dropbox_API_Module")):
 			if(empty($this->oauth_token) || empty($this->oauth_token_secret))
 				return false;
 			
-			$this->log("verify dropbox token:");
-			$this->log($this);
+			api_con_log("verify dropbox token:");
+			api_con_log($this);
 				$res = $this->request(
 						"https://api.dropbox.com/1/account/info",
 						"get",
@@ -139,8 +139,8 @@ if (!class_exists("Dropbox_API_Module")):
 				);
 				
 			//$res = $this->request("https://api.dropbox.com/1/account/info", "POST", null, false);
-			$this->log("response:");
-			$this->log($res);
+			api_con_log("response:");
+			api_con_log($res);
 			if(is_wp_error($res))
 				return false;
 			
