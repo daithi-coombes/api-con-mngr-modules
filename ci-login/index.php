@@ -9,7 +9,7 @@
  */
 
 if ( !class_exists( 'CIAPIPHP' ) )
-	require_once('CIAPI-PHP/CIAPIPHP.class.php');
+	require_once( 'CIAPI-PHP/CIAPIPHP.class.php' );
 
 if(!class_exists("CityIndex_API")):
 	
