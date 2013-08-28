@@ -65,6 +65,10 @@ if(!class_exists("MailChimp_API")):
 		}
 		
 		function get_profile(){
+			return (object) array(
+				'id' => '1',
+				'username' => 'foo'
+				);
 			$res = $this->request('getAccountDetails', 'post', array());
 			$body = json_decode($res['body']);
 			return (object) array(
