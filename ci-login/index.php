@@ -17,7 +17,8 @@ if(!class_exists("CityIndex_API")):
 		
 		function __construct(){
 
-			$this->endpoint = "http://23.21.217.245/ciauth/authorize";
+			$this->url_authorize = "http://23.21.217.245/ciauth/authorize";
+			$this->url_access_token = "http://23.21.217.245/ciauth/token";
 			$this->protocol = "oauth2";
 
 			parent::__construct();
@@ -27,8 +28,15 @@ if(!class_exists("CityIndex_API")):
 			return false;
 		}
 
-		function get_uid(){
+		function get_authorize_url(){
+			return parent::get_authorize_url(array(
+				'redirect_uri' => $this->redirect_uri
+			)); // . "&redirect_uri=" . $this->redirect_uri;
+		}
 
+		function get_uid( $dto = null ){
+			if ( $dto->response['username'] )
+				return $dto->response['username'];
 		}
 
 		function get_profile(){
