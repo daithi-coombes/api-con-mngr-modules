@@ -42,7 +42,10 @@ class Facebook_API extends API_Con_Mngr_Module{
 	}
 
 	function check_error(array $response) {
-		var_dump($response);
+		$data = json_decode( $response['body'] );
+		var_dump($data);
+		if ( $data->error )
+			return new API_Con_Error( $data->error->message );
 	}
 
 	function request($url, $method='GET', $parameters = array(), $die=true){
